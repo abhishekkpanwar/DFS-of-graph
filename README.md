@@ -1,1 +1,1 @@
-# DFS-of-graph
+# Graph data structure
