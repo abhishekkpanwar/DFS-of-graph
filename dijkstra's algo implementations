@@ -1,0 +1,65 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Solution
+{
+	public:
+    vector <int> dijkstra(int n, vector<vector<int>> adj[], int source)
+    {
+        int inf=1e8;
+       vector<int>dist(n,inf);
+       set<pair<int,int>>s;
+       s.insert({0,source});
+       dist[source]=0;
+       while(!s.empty())
+       {
+           auto x=*s.begin();
+           s.erase(x);
+           for(auto i:adj[x.second])
+           {
+               int u=i[0],w=i[1];
+               if(dist[u]>w+dist[x.second])
+               {
+                   s.erase({dist[u],u});
+                   dist[u]=w+dist[x.second];
+                   s.insert({dist[u],u});
+               }
+           }
+       }
+   return dist;
+    }
+};
+
+int main()
+{
+    int t;
+    cin >> t;
+    while (t--) {
+        int V, E;
+        cin >> V >> E;
+        vector<vector<int>> adj[V];
+        int i=0;
+        while (i++<E) {
+            int u, v, w;
+            cin >> u >> v >> w;
+            vector<int> t1,t2;
+            t1.push_back(v);
+            t1.push_back(w);
+            adj[u].push_back(t1);
+            t2.push_back(u);
+            t2.push_back(w);
+            adj[v].push_back(t2);
+        }
+        int S;
+        cin>>S;
+
+        Solution obj;
+    	vector<int> res = obj.dijkstra(V, adj, S);
+
+    	for(int i=0; i<V; i++)
+    	    cout<<res[i]<<" ";
+    	cout<<endl;
+    }
+
+    return 0;
+}
